@@ -387,6 +387,22 @@ app.delete('/delete_meal', verifyJWT, async (req, res) => {
     }
 })
 
+// get meal
+app.get('/get_meal', verifyJWT, async (req, res) => {
+    // QUERY STRING MUST BE { id: meal_id }
+    try{
+        const meal_id = req.query.id;
+        const meal = await Meal.findById(meal_id)
+        const creatorName = await User.findById(meal.creator)
+
+        let mealObj = meal.toObject()
+        mealObj.creatorName = creatorName.username
+        res.status(200).json(mealObj)
+    }catch(e){
+        res.status(500).json({'message': e})
+    }
+})
+
 // WORKOUT SESSION ROUTES
 // Route for finishing the user's workout session
 app.patch('/finish_workout', verifyJWT, async (req, res) => {
