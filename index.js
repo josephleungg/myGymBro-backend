@@ -491,6 +491,10 @@ app.get('/get_userexercise_info', verifyJWT, async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.json('Hello World!')
+})
+
 app.listen(5000, () => {
     console.log('server is running on port 5000')
 });
